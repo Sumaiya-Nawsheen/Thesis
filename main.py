@@ -35,8 +35,8 @@ def contouring(thresh, mid, img, right=False):
         pass
 
 
-detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor('shape_68.dat')
+hog_face_detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
 
 left = [36, 37, 38, 39, 40, 41]
 right = [42, 43, 44, 45, 46, 47]
@@ -58,7 +58,7 @@ cv2.createTrackbar('threshold', 'image', 0, 255, nothing)
 while (True):
     ret, img = cap.read()
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    rects = detector(gray, 1)
+    rects = hog_face_detector(gray, 1)
     for rect in rects:
         shape = predictor(gray, rect)
         shape = shape_to_np(shape)
